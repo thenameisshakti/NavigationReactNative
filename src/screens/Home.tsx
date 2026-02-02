@@ -1,14 +1,13 @@
-import { StyleSheet,Button} from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default function Home({ navigation }) {
+export default function Home() {
   return (
-    <Button
-      title="Open Popup"
-      onPress={() => navigation.navigate('Details')}
-    />
-  );
+    <View>    
+      <Text>Home</Text>
+    </View>
+  )
 }
-
 
 const styles = StyleSheet.create({})

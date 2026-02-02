@@ -1,63 +1,47 @@
-
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useLinkBuilder, useTheme } from '@react-navigation/native';
 import { Text, PlatformPressable } from '@react-navigation/elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import Search from '../screens/Search';
 import Library from '../screens/Library';
-import Ionicons from "react-native-vector-icons/Ionicons"
-import { NavigationContainer } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useTheme } from '@react-navigation/native';
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-function MyTabBar({ state, descriptors, navigation }) {
+function MyTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const { colors } = useTheme();
-  const { buildHref } = useLinkBuilder();
-    console.log(state,descriptors,navigation)
+  console.log(state, descriptors, navigation);
   return (
     <View style={styles.container}>
       {state.routes.map((route, index) => {
+        const isActive = state.index === index;
         const { options } = descriptors[route.key];
-        console.log(options.tabBarIcon )
-        const isFocused = state.index === index;
-
-        const icon =
-  typeof options.tabBarIcon === 'function'
-    ? options.tabBarIcon({
-        focused: isFocused,
-        color: isFocused ? colors.primary : colors.text,
-        size: 24,
-      })
-    : null;
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name, route.params);
-          }
-        };
 
         return (
           <PlatformPressable
             key={route.key}
-            onPress={onPress}
+            onPress={() => navigation.navigate(route.name)}
             style={styles.tab}
           >
             <View style={styles.tabItem}>
-              {icon}
+              {options.tabBarIcon?.({
+                focused: isActive,
+                color: isActive ? colors.primary : colors.text,
+                size: 24,
+              })}
+
               <Text
-                style={[
-                  styles.label,
-                  { color: isFocused ? colors.primary : colors.text },
-                ]}
+                style={{
+                  color: isActive ? colors.primary : colors.text,
+                  fontSize: 12,
+                  marginTop: 4,
+                }}
               >
-                {options.tabBarLabel}
+                {typeof options.tabBarLabel === 'string'
+                  ? options.tabBarLabel
+                  : route.name}
               </Text>
             </View>
           </PlatformPressable>
@@ -67,60 +51,67 @@ function MyTabBar({ state, descriptors, navigation }) {
   );
 }
 
-
 const Tab = createBottomTabNavigator();
 
 export function MyTabs() {
   return (
-    <Tab.Navigator  tabBar={(props) => <MyTabBar {...props} />}>
-      <Tab.Screen name="Home" component={Home} 
-      options={{
-        tabBarLabel: 'Home',
-        tabBarIcon: ({ focused, color, size }) => (
-        <Ionicons
-            name={focused ? 'home' : 'home-outline'}
-            size={size}
-            color={color}
-        />
-    ),
-  }}
+    <Tab.Navigator screenOptions={{ headerShown: false }} tabBar={props => <MyTabBar {...props} />}>
+      <Tab.Screen
+        name="Homee"
+        component={Home}
+        options={{
+          tabBarLabel: 'home',
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'home' : 'home-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
       />
-      <Tab.Screen name="Search" component={Search}
-            options={{
-        tabBarLabel: 'search',
-        tabBarIcon: ({ focused, color, size }) => (
-        <Ionicons
-            name={focused ? 'search' : 'search-outline'}
-            size={size}
-            color={color}
-        />
-    ),
-  }}
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{
+          tabBarLabel: 'earch',
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'search' : 'search-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
       />
-      <Tab.Screen name="Library" component={Library}
-            options={{
-        tabBarLabel: 'Library',
-        tabBarIcon: ({ focused, color, size }) => (
-        <Ionicons
-            name={focused ? 'disc' : 'disc-outline'}
-            size={size}
-            color={color}
-        />
-    ),
-  }} />
-      <Tab.Screen name="Profile" component={Profile} 
-            options={{
-        tabBarLabel: 'Profile',
-        tabBarIcon: ({ focused, color, size }) => (
-        <Ionicons
-            name={focused ? 'person' : 'person-outline'}
-            size={size}
-            color={color}
-        />
-    ),
-  }}
+      <Tab.Screen
+        name="Library"
+        component={Library}
+        options={{
+          tabBarLabel: 'Library',
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'disc' : 'disc-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
       />
-
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: 'Profilee',
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'person' : 'person-outline'}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -146,5 +137,3 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
-
-
