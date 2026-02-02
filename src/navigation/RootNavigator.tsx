@@ -8,7 +8,7 @@ export function RootNavigator() {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn)
   console.log(isLoggedIn)
 
-return isLoggedIn? <AppNavigator /> : <AuthNavigator />;
+return isLoggedIn ? <AppNavigator /> : <AuthNavigator />;
 
 }
  

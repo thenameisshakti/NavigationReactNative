@@ -13,7 +13,7 @@ import { loggedInSuccess } from '../context/auth';
 export default function OtpVerification() {
 
   const dispatch = useDispatch()
-  const [otp, setOtp] = useState(''); // ✅ default OTP
+  const [otp, setOtp] = useState('2277'); // ✅ default OTP
 
   function handleVerifyOtp() {
     if (otp !== '2277') {
