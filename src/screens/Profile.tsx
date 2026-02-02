@@ -7,7 +7,7 @@ export default function Profile() {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout({}));
   };
 
   return (

@@ -6,7 +6,7 @@ const Stack = createNativeStackNavigator();
 
 export function AuthNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator>
       <Stack.Screen name="Login">
         {(props) => <Login {...props} />}
       </Stack.Screen>
